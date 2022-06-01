@@ -92,7 +92,7 @@ Release announcements are available from https://www.FreeBSD.org/releases/[https
 
 [NOTE]
 ====
-If a `crontab` utilizing the features of man:freebsd-update[8] exists, it must be disabled before upgrading the operating system.
+If a man:crontab[5] utilizing the features of man:freebsd-update[8] exists, it must be disabled before upgrading the operating system.
 ====
 
 This section describes the configuration file used by `freebsd-update`, demonstrates how to apply a security patch and how to upgrade to a minor or major operating system release, and discusses some of the considerations when upgrading the operating system.
@@ -176,7 +176,7 @@ Effectively, `freebsd-update` will attempt to update every file which belongs to
 [[freebsdupdate-security-patches]]
 === Applying Security Patches
 
-The process of applying FreeBSD security patches has been simplified, allowing an administrator to keep a system fully patched using `freebsd-update`. 
+The process of applying FreeBSD security patches has been simplified, allowing an administrator to keep a system fully patched using `freebsd-update`.
 More information about FreeBSD security advisories can be found in crossref:security[security-advisories,"FreeBSD Security Advisories"].
 
 FreeBSD security patches may be downloaded and installed using the following commands.
@@ -195,7 +195,8 @@ If the patch was applied to any running binaries, the affected applications shou
 [NOTE]
 ====
 Usually, the user needs to be prepared to reboot the system.
-To know if a reboot is required by a kernel update, execute the commands `freebsd-version -k` and `uname -r` and if it differs a reboot is required.
+To know if the system requires a reboot due to a kernel update, execute the commands `freebsd-version -k` and `uname -r`.
+Reboot the system if the outputs differ.
 ====
 
 The system can be configured to automatically check for updates once every day by adding this entry to [.filename]#/etc/crontab#:
@@ -407,7 +408,7 @@ After a major version upgrade, all installed packages and ports need to be upgra
 Packages can be upgraded using `pkg upgrade`.
 To upgrade installed ports, use a utility such as package:ports-mgmt/portmaster[].
 
-A forced upgrade of all installed packages will replace the packages with fresh versions from the repository even if the version number has not increased. 
+A forced upgrade of all installed packages will replace the packages with fresh versions from the repository even if the version number has not increased.
 This is required because of the ABI version change when upgrading between major versions of FreeBSD.
 The forced upgrade can be accomplished by performing:
 
@@ -423,7 +424,7 @@ A rebuild of all installed applications can be accomplished with this command:
 # portmaster -af
 ....
 
-This command will display the configuration screens for each application that has configurable options and wait for the user to interact with those screens. 
+This command will display the configuration screens for each application that has configurable options and wait for the user to interact with those screens.
 To prevent this behavior, and use only the default options, include `-G` in the above command.
 
 Once the software upgrades are complete,
@@ -481,6 +482,11 @@ Some files have natural modifications.
 For example, [.filename]#/etc/passwd# will be modified if users have been added to the system.
 Kernel modules may differ as `freebsd-update` may have updated them.
 To exclude specific files or directories, add them to the `IDSIgnorePaths` option in [.filename]#/etc/freebsd-update.conf#.
+
+[[updating-bootcode]]
+== Updating Bootcode
+
+The following manuals describe the upgrade process of bootcode and boot loaders: man:gpart[8], man:gptboot[8], man:gptzfsboot[8], and man:loader.efi[8].
 
 [[updating-upgrading-documentation]]
 == Updating the Documentation Set
@@ -541,7 +547,7 @@ FreeBSD-CURRENT is the "bleeding edge" of FreeBSD development and FreeBSD-CURREN
 Less technical users who wish to track a development branch should track FreeBSD-STABLE instead.
 
 FreeBSD-CURRENT is the very latest source code for FreeBSD and includes works in progress, experimental changes, and transitional mechanisms that might or might not be present in the next official release.
-While many FreeBSD developers compile the FreeBSD-CURRENT source code daily, there are short periods of time when the source may not be buildable. 
+While many FreeBSD developers compile the FreeBSD-CURRENT source code daily, there are short periods of time when the source may not be buildable.
 These problems are resolved as quickly as possible, but whether or not FreeBSD-CURRENT brings disaster or new functionality can be a matter of when the source code was synced.
 
 FreeBSD-CURRENT is made available for three primary interest groups:
@@ -597,7 +603,7 @@ To join these lists, go to {mailing-lists}, click on the list to subscribe to, a
 In order to track changes for the whole source tree, subscribe to {dev-commits-src-all}.
 . To install a new FreeBSD-STABLE system, install the most recent FreeBSD-STABLE release from the crossref:mirrors[mirrors,FreeBSD mirror sites] or use a monthly snapshot built from FreeBSD-STABLE. Refer to link:https://www.FreeBSD.org/snapshots/[www.freebsd.org/snapshots] for more information about snapshots.
 +
-To compile or upgrade to an existing FreeBSD system to FreeBSD-STABLE, use `git` to check out the source for the desired branch.
+To compile or upgrade an existing FreeBSD system to FreeBSD-STABLE, use `git` to check out the source for the desired branch.
 Branch names, such as `stable/9`, are listed at link:https://www.FreeBSD.org/releng/[www.freebsd.org/releng].
 . Before compiling or upgrading to FreeBSD-STABLE , read [.filename]#/usr/src/Makefile# carefully and follow the instructions in <<makeworld>>. Read the {freebsd-stable} and [.filename]#/usr/src/UPDATING# to keep up-to-date on other bootstrapping procedures that sometimes become necessary on the road to the next release.
 
@@ -690,7 +696,7 @@ check /usr/src/UPDATING  <.>
 
 <.> Reboot the system to the new kernel.
 
-<.> Update and merge configuraton files in [.filename]#/etc/# required before installworld.
+<.> Update and merge configuration files in [.filename]#/etc/# required before installworld.
 
 <.> Go to the source directory.
 
@@ -740,7 +746,7 @@ If the output says `fatal: not a git repository`, the files there are missing or
 A new checkout of the source is required.
 
 [[updating-src-obtaining-src-repopath]]
-.FreeBSD Versions and Repository Branchs
+.FreeBSD Versions and Repository Branches
 [cols="10%,10%,80%", options="header"]
 |===
 | uname -r Output

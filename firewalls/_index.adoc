@@ -93,7 +93,7 @@ For a good introduction, refer to http://www.ipprimer.com[Daryl's TCP/IP Primer]
 
 A ruleset contains a group of rules which pass or block packets based on the values contained in the packet.
 The bi-directional exchange of packets between hosts comprises a session conversation.
-The firewall ruleset processes both the packets arriving from the public Internet, as well as the packets produced by the system as a response to them. 
+The firewall ruleset processes both the packets arriving from the public Internet, as well as the packets produced by the system as a response to them.
 Each TCP/IP service is predefined by its protocol and listening port.
 Packets destined for a specific service originate from the source address using an unprivileged port and target the specific service port on the destination address.
 All the above parameters can be used as selection criteria to create rules which will pass or block services.
@@ -488,7 +488,7 @@ Note the `quick` keyword in this rule.
 Since the ruleset consists of several rules, it is important to understand the relationships between the rules in a ruleset.
 Rules are evaluated from top to bottom, in the sequence they are written.
 For each packet or connection evaluated by PF, _the last matching rule_ in the ruleset is the one which is applied.
-However, when a packet matches a rule which contains the `quick` keyword, the rule processing stops and the packet is treated according to that rule. 
+However, when a packet matches a rule which contains the `quick` keyword, the rule processing stops and the packet is treated according to that rule.
 This is very useful when an exception to the general rules is needed.
 
 [[pftut-ftp]]
@@ -502,8 +502,8 @@ The most common points against using FTP include:
 * The protocol demands the use of at least two TCP connections (control and data) on separate ports.
 * When a session is established, data is communicated using randomly selected ports.
 
-All of these points present security challenges, even before considering any potential security weaknesses in client or server software.
-More secure alternatives for file transfer exist, such as man:sftp[1] or man:scp[1], which both feature authentication and data transfer over encrypted connections..
+All of these points present security challenges, even before considering any potential security weaknesses in client or server software. 
+More secure alternatives for file transfer exist, such as man:sftp[1] or man:scp[1], which both feature authentication and data transfer over encrypted connections.
 
 For those situations when FTP is required, PF provides redirection of FTP traffic to a small proxy program called man:ftp-proxy[8], which is included in the base system of FreeBSD.
 The role of the proxy is to dynamically insert and delete rules in the ruleset, using a set of anchors, to correctly handle FTP traffic.
@@ -515,7 +515,12 @@ To enable the FTP proxy, add this line to [.filename]#/etc/rc.conf#:
 ftpproxy_enable="YES"
 ....
 
-Then start the proxy by running `service ftp-proxy start`.
+Then start the proxy by running:
+
+[source,bash]
+....
+# service ftp-proxy start
+....
 
 For a basic configuration, three elements need to be added to [.filename]#/etc/pf.conf#.
 First, the anchors which the proxy will use to insert the rules it generates for the FTP sessions:
@@ -715,7 +720,7 @@ This is indicative of a brute force attack where somebody or some program is try
 
 If external SSH access is needed for legitimate users, changing the default port used by SSH can offer some protection.
 However, PF provides a more elegant solution.
-Pass rules can contain limits on what connecting hosts can do and violators can be banished to a table of addresses which are denied some or all access. 
+Pass rules can contain limits on what connecting hosts can do and violators can be banished to a table of addresses which are denied some or all access.
 It is even possible to drop all existing connections from machines which overreach the limits.
 
 To configure this, create this table in the tables section of the ruleset:
@@ -1400,7 +1405,7 @@ $cmd 00999 deny log all from any to any
 [[in-kernel-nat]]
 === In-kernel NAT
 
-FreeBSD's IPFW firewall has two implementations of NAT: the userland implementation man:natd[8], and the more recent in-kernel NAT implementation. 
+FreeBSD's IPFW firewall has two implementations of NAT: the userland implementation man:natd[8], and the more recent in-kernel NAT implementation.
 Both work in conjunction with IPFW to provide network address translation.
 This can be used to provide an Internet Connection Sharing solution so that several internal computers can connect to the Internet using a single public IP address.
 
@@ -1453,7 +1458,7 @@ net.inet.tcp.tso="0"
 A NAT instance will also be configured.
 It is possible to have multiple NAT instances each with their own configuration.
 For this example only one NAT instance is needed, NAT instance number 1.
-The configuration can take a few options such as: `if` which indicates the public interface, `same_ports` which takes care that alliased ports and local port numbers are mapped the same, `unreg_only` will result in only unregistered (private) address spaces to be processed by the NAT instance, and `reset` which will help to keep a functioning NAT instance even when the public IP address of the IPFW machine changes.
+The configuration can take a few options such as: `if` which indicates the public interface, `same_ports` which takes care that aliased ports and local port numbers are mapped the same, `unreg_only` will result in only unregistered (private) address spaces to be processed by the NAT instance, and `reset` which will help to keep a functioning NAT instance even when the public IP address of the IPFW machine changes.
 For all possible options that can be passed to a single NAT instance configuration consult man:ipfw[8].
 When configuring a stateful NATing firewall, it is necessary to allow translated packets to be reinjected in the firewall for further processing.
 This can be achieved by disabling `one_pass` behavior at the start of the firewall script.
@@ -2079,10 +2084,10 @@ All the rules use `quick` and specify the appropriate port numbers and, where ap
 # firewall, destined for the Internet.
 
 # Allow outbound access to public DNS servers.
-# Replace x.x.x. with address listed in /etc/resolv.conf.
+# Replace x.x.x.x with address listed in /etc/resolv.conf.
 # Repeat for each DNS server.
-pass out quick on dc0 proto tcp from any to x.x.x. port = 53 flags S keep state
-pass out quick on dc0 proto udp from any to xxx port = 53 keep state
+pass out quick on dc0 proto tcp from any to x.x.x.x port = 53 flags S keep state
+pass out quick on dc0 proto udp from any to x.x.x.x port = 53 keep state
 
 # Allow access to ISP's specified DHCP server for cable or DSL networks.
 # Use the first rule, then check log for the IP address of DHCP server.
@@ -2320,7 +2325,7 @@ To turn verbose mode on and display information relating to rule processing and 
 
 === Viewing IPF Statistics
 
-IPF includes man:ipfstat[8] which can be used to retrieve and display statistics which are gathered as packets match rules as they go through the firewall. 
+IPF includes man:ipfstat[8] which can be used to retrieve and display statistics which are gathered as packets match rules as they go through the firewall.
 Statistics are accumulated since the firewall was last started or since the last time they were reset to zero using `ipf -Z`.
 
 The default `ipfstat` output looks like this:
@@ -2509,7 +2514,7 @@ The syntax for the location field is as follows:
 [address|interface][/mask][:port]
 ....
 
-Adressses can be specified as IPv4 in numeric format or IPv6 in square brackets.
+Addresses can be specified as IPv4 in numeric format or IPv6 in square brackets.
 An interface name like `_em0_` can also be used.
 
 The socket type is defined by the second field.
@@ -2680,6 +2685,6 @@ After identifying the address to be unblocked from the list, the following comma
 # pfctl -a blacklistd/22 -t port22 -T delete 213.0.123.128/25
 ....
 
-The address is now removed from PF, but will still show up in the blacklistctl list, since it does not know about any changes made in PF.
-The entry in blacklistd's database will eventually expire and be removed from its output eventually.
+The address is now removed from PF, but will still show up in the blacklistctl list, since it does not know about any changes made in PF. 
+The entry in blacklistd's database will eventually expire and be removed from its output.
 The entry will be added again if the host is matching one of the block rules in blacklistd again.
