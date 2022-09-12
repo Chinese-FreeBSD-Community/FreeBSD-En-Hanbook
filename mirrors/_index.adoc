@@ -8,11 +8,6 @@ tags: ["Obtaining", "CD", "DVD", "FTP", "Git"]
 showBookMenu: true
 weight: 39
 path: "/books/handbook/"
-aliases: [
-"/en/books/handbook/mirrors-ftp/",
-"/en/books/handbook/svn/",
-"/en/books/handbook/mirrors-rsync/"
-]
 ---
 
 [appendix]
@@ -76,10 +71,6 @@ Official mirrors service:
 | **pkg.FreeBSD.org**
 | man:pkg[8] over `http` and `https`
 | Official FreeBSD package repositories used by the man:pkg[8] program.
-
-| **vuxml.FreeBSD.org** / **www.VuXML.org**
-| link:https://www.vuxml.org/[https]
-| FreeBSD Project VuXML web page. `pkg audit` fetches the list of vulnerabilities from this service.
 |===
 
 All official mirrors support IPv4 and IPv6.
@@ -202,7 +193,7 @@ Mirror list maintained by the community and other companies:
 
 | Latvia icon:envelope[link=mailto:{mirrors-latvia-email}, title="mirror contact"]
 | ftp.lv.FreeBSD.org
-| link:http://ftp.lv.FreeBSD.org/freebsd[http] link:ftp://ftp.lv.FreeBSD.org/freebsd[ftp]
+| link:http://ftp.lv.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp.lv.FreeBSD.org/pub/FreeBSD[ftp]
 
 | Netherlands icon:envelope[link=mailto:{mirrors-netherlands-email}, title="mirror contact"]
 | ftp.nl.FreeBSD.org
