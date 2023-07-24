@@ -6,7 +6,7 @@ next: books/handbook/bibliography
 description: "How to get FreeBSD: CD and DVD sets, FTP sites and how to install and use Git"
 tags: ["Obtaining", "CD", "DVD", "FTP", "Git"]
 showBookMenu: true
-weight: 40
+weight: 41
 path: "/books/handbook/"
 ---
 
@@ -60,6 +60,10 @@ Official mirrors service:
 |===
 | Service Name | Protocols | More information
 
+| **docs.FreeBSD.org**
+| link:https://docs.FreeBSD.org/[https]
+| FreeBSD Documentation Portal.
+
 | **download.FreeBSD.org**
 | link:https://download.FreeBSD.org/[https] link:ftp://download.FreeBSD.org/pub/FreeBSD/[ftp]
 | Same content as `ftp.FreeBSD.org`, `ftp` is a legacy name; `download.FreeBSD.org` is recommended.
@@ -76,9 +80,9 @@ Official mirrors service:
 | link:https://www.vuxml.org/[https]
 | FreeBSD Project VuXML web page. `pkg audit` fetches the list of vulnerabilities from this service.
 
-| **www.FreeBSD.org** / **docs.FreeBSD.org**
-| `https`
-| link:https://www.freebsd.org/[FreeBSD Web Site] and the link:https://docs.freebsd.org/[FreeBSD Documentation Portal].
+| **www.FreeBSD.org**
+| link:https://www.FreeBSD.org/[https]
+| FreeBSD Website.
 |===
 
 All official mirrors support IPv4 and IPv6.

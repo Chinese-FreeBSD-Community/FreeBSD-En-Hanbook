@@ -105,9 +105,9 @@ To keep track of updated ports, subscribe to the {freebsd-ports} and the {freebs
 
 [WARNING]
 ====
-Before installing an application, check https://vuxml.freebsd.org/[] for security issues related to the application.
+Before installing an application, check https://vuxml.freebsd.org/[] for related security issues.
 
-To check for known vulnerabilities of installed applications use use `pkg audit -F`.
+To audit installed packages against known vulnerabilities, run `pkg audit -F`.
 ====
 
 The remainder of this chapter explains how to use packages and ports to install and manage third-party software on FreeBSD.
@@ -163,7 +163,7 @@ Do you want to fetch and install it not? [y/N]
 
 man:pkg[7] will intercept the command, and if you confirm that is your intention, download the man:pkg[8] tarball, install man:pkg[8] from it, bootstrap the local package database and then proceed to run the command you originally requested.
 
-More recent versions of man:pkg[7] understand `pkg -N` as a test to see if man:pkg[8] is installed without triggering the installation, and conversely, `pkg bootstrap[-f]` to install man:pkg[8] (or force it to be reinstalled) without performing any other actions.
+More recent versions of man:pkg[7] understand `pkg -N` as a test to see if man:pkg[8] is installed without triggering the installation, and conversely, pkg bootstrap[-f] to install man:pkg[8] (or force it to be reinstalled) without performing any other actions.
 
 Usage information for pkg is available in the man:pkg[8] manual page or by running `pkg` without additional arguments.
 Additional pkg configuration options are described in man:pkg.conf[5].
@@ -184,15 +184,15 @@ Refer to a command's help or man page for details and more examples.
 [[quarterly-latest-branch]]
 === Quarterly and Latest Ports Branches
 
-Quarterly branches provides users with a more predictable and stable experience for port and package installation and upgrades.
+The `Quarterly` branch provides users with a more predictable and stable experience for port and package installation and upgrades.
 This is done essentially by only allowing non-feature updates.
 Quarterly branches aim to receive security fixes (that may be version updates, or backports of commits), bug fixes and ports compliance or framework changes.
-A quarterly is branched from `main` at the beginning of every (yearly) quarter in January, April, July, and October.
+The Quarterly branch is cut from HEAD at the beginning of every (yearly) quarter in January, April, July, and October.
 Branches are named according to the year (YYYY) and quarter (Q1-4) they are created in.
-For example, the quarterly branch created in January 2023, is named `2023Q1`.
-`latest` provides the latest versions of ports.
+For example, the quarterly branch created in January 2023, is named 2023Q1.
+And the `Latest` branch provides the latest versions of the packages to the users.
 
-To switch man:pkg.conf[5] from quarterly to latest -- if you do not already have a [.filename]#FreeBSD.conf# at [.filename]#/usr/local/etc/pkg/repos# -- run the following commands:
+To switch man:pkg[8] from Quarterly to Latest run the following commands:
 
 [source,shell]
 ....
@@ -200,11 +200,11 @@ To switch man:pkg.conf[5] from quarterly to latest -- if you do not already have
 # echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
 ....
 
-Then run this command to update the local package repositories catalogues:
+Then run this command to update the local package repositories catalogues for the Latest branch:
 
 [source,shell]
 ....
-# pkg update
+# pkg update -f
 ....
 
 [[pkg-configuration]]
@@ -436,7 +436,7 @@ The output should be similar to the following:
 
 [.programlisting]
 ....
-Fetching vuln.xml.xz: 100%  976 KiB 499.5kB/s    00:02    
+Fetching vuln.xml.xz: 100%  976 KiB 499.5kB/s    00:02
 chromium-108.0.5359.98 is vulnerable:
   chromium -- multiple vulnerabilities
   CVE: CVE-2022-4440
@@ -503,7 +503,7 @@ Number of packages to be removed: 1
 
 The operation will free 723 KiB.
 
-Proceed with deinstalling packages? [y/N]: 
+Proceed with deinstalling packages? [y/N]:
 ....
 
 Packages installed as dependencies are called _automatic_ packages.
@@ -557,38 +557,6 @@ Marking an installed package as _not_ automatic can be done using:
 [source,shell]
 ....
 # pkg set -A 0 devel/cmake
-....
-
-[[pkgng-backup]]
-=== Restoring the Package Database
-
-Unlike the traditional package management system, pkg includes its own package database backup mechanism.
-This functionality is enabled by default.
-
-[TIP]
-====
-To disable the periodic script from backing up the package database, set `daily_backup_pkgdb_enable="NO"` in man:periodic.conf[5].
-====
-
-To restore the contents of a previous package database backup,
-run the following command replacing _/path/to/pkg.sql_ with the location of the backup:
-
-[source,shell]
-....
-# pkg backup -r /path/to/pkg.sql
-....
-
-[NOTE]
-====
-If restoring a backup taken by the periodic script, it must be decompressed prior to being restored.
-====
-
-To run a manual backup of the pkg database, run the following command,
-replacing _/path/to/pkg.sql_ with a suitable file name and location:
-
-[source,shell]
-....
-# pkg backup -d /path/to/pkg.sql
 ....
 
 [[pkgng-clean]]
@@ -675,13 +643,13 @@ By default, the Ports Collection itself is stored as a subdirectory of `/usr/por
 [WARNING]
 ====
 Before installing and using the Ports Collection, please be aware that it is generally ill-advised to use the Ports Collection in conjunction with the binary packages provided via pkg to install software.
-In RELEASE versions of FreeBSD: man:pkg.conf[5] defaults to quarterly, not latest.
-Dependencies could be different for a port in latest, compared to its counterpart (if any) in quarterly, and this could result in conflicts between dependencies installed by pkg and those from the Ports Collection.
-If the Ports Collection and pkg must be used in conjunction, then be sure that your Ports Collection and pkg are on the same branch of the ports tree.
+pkg, by default, tracks quarterly branch-releases of the ports tree and not HEAD.
+Dependencies could be different for a port in HEAD compared to its counterpart in a quarterly branch release and this could result in conflicts between dependencies installed by pkg and those from the Ports Collection.
+If the Ports Collection and pkg must be used in conjunction, then be sure that your Ports Collection and pkg are on the same branch release of the ports tree.
 ====
 
 The Ports Collection contains directories for software categories.
-Within each category are subdirectories for individual applications.
+Inside each category are subdirectories for individual applications.
 Each application subdirectory contains a set of files that tells FreeBSD how to compile and install that program, called a _ports skeleton_.
 Each port skeleton includes these files and directories:
 
@@ -727,14 +695,14 @@ If the ports tree is not available, or pkg is being used to manage packages, Git
 # pkg install git
 ....
 +
-. Check out the `main` branch of the ports repo:
+. Check out a copy of the HEAD branch of the ports tree:
 +
 [source,shell]
 ....
 # git clone https://git.FreeBSD.org/ports.git /usr/ports
 ....
 +
-. Or, check out a quarterly branch:
+. Or, check out a copy of a quarterly branch:
 +
 [source,shell]
 ....
@@ -1133,15 +1101,15 @@ By default, this command is interactive and prompts the user to confirm if a dis
 In addition to these commands, package:ports-mgmt/pkg_cutleaves[] automates the task of removing installed ports that are no longer needed.
 
 [[ports-poudriere]]
-== Building Packages with Poudriere
+== Building Packages with poudriere
 
-Poudriere is a `BSD`-licensed utility for creating and testing FreeBSD packages.
+poudriere is a `BSD`-licensed utility for creating and testing FreeBSD packages.
 It uses FreeBSD jails to set up isolated compilation environments.
 These jails can be used to build packages for versions of FreeBSD that are different from the system on which it is installed, and also to build packages for i386 if the host is an amd64 system.
 Once the packages are built, they are in a layout identical to the official mirrors.
 These packages are usable by man:pkg[8] and other package management tools.
 
-Poudriere is installed using the package:ports-mgmt/poudriere[] package or port.
+poudriere is installed using the package:ports-mgmt/poudriere[] package or port.
 The installation includes a sample configuration file `/usr/local/etc/poudriere.conf.sample`.
 Copy this file to `/usr/local/etc/poudriere.conf`.
 Edit the copied file to suit the local configuration.
@@ -1252,13 +1220,13 @@ Finally, packages are built and a package repository is created:
 ....
 
 While running, pressing kbd:[Ctrl+t] displays the current state of the build.
-Poudriere also builds files in `/poudriere/logs/bulk/jailname` that can be used with a web server to display build information.
+poudriere also builds files in `/poudriere/logs/bulk/jailname` that can be used with a web server to display build information.
 
 After completion, the new packages are now available for installation from the poudriere repository.
 
 For more information on using poudriere, see man:poudriere[8] and the main web site, https://github.com/freebsd/poudriere/wiki[].
 
-=== Configuring pkg Clients to Use a Poudriere Repository
+=== Configuring pkg Clients to Use a poudriere Repository
 
 While it is possible to use both a custom repository along side of the official repository, sometimes it is useful to disable the official repository.
 This is done by creating a configuration file that overrides and disables the official configuration file.
