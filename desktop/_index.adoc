@@ -196,7 +196,7 @@ For this to work, the following line is needed in ~/.xinitrc:
 GNOME is a user-friendly desktop environment. It includes a panel for starting applications and displaying status, a desktop, a set of tools and applications, and a set of conventions that make it easy for applications to cooperate and be consistent with each other.
 
 [[gnome-meta-install]]
-==== Install GNOME meta pacakge
+==== Install GNOME meta package
 
 To install the GNOME meta package with GNOME Desktop and Applications, execute:
 
@@ -328,7 +328,6 @@ For this to work, the following line is needed in `~/.xinitrc`:
 === MATE
 
 The MATE Desktop Environment is the continuation of GNOME 2.
-// What does "traditional metaphors" mean?
 It provides an intuitive and attractive desktop environment using traditional metaphors.
 
 [[mate-meta-install]]
@@ -559,12 +558,12 @@ This section describes how to install and configure some popular web browsers on
 
 | Iridium browser
 | BSD-3 and others
-| package:www/iridium[]
+| package:www/iridium-browser[]
 | Heavy
 
 | Falkon
 | MPL 2.0
-| package:www/falkon[]
+| package:www/falkon-qtonly[]
 | Heavy
 
 | Konqueror
@@ -584,7 +583,7 @@ This section describes how to install and configure some popular web browsers on
 
 | Dillo
 | GPL 3.0 or later
-| package:www/dillo2[]
+| package:www/dillo[]
 | Light
 
 | Links
@@ -697,8 +696,6 @@ To install Gnome Web (Epiphany), execute:
 
 Qutebrowser is a keyboard-focused browser with a minimal GUI.
 It is based on Python and PyQt5 and free software, licensed under the GPL.
-// What are these and how does this information help in this context?
-It was inspired by other browsers/addons like dwb and Vimperator/Pentadactyl.
 
 To install qutebrowser, execute:
 
@@ -717,7 +714,7 @@ To install Dillo, execute:
 
 [source,shell]
 ....
-# pkg install dillo2
+# pkg install dillo
 ....
 
 [[links]]

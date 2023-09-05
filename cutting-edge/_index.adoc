@@ -783,16 +783,17 @@ After it finishes, the source code is up to date and the build process described
 
 [NOTE]
 ====
-*Obtaining the Source:* +
+Obtaining the source:
 
 If the output says `fatal: not a git repository`, the files there are missing or were installed with a different method.
 A new checkout of the source is required.
+====
 
 [[updating-src-obtaining-src-repopath]]
 .FreeBSD Versions and Repository Branches
 [cols="10%,10%,80%", options="header"]
 |===
-| uname -r Output
+| uname&#160;&#8209;r Output
 | Repository Path
 | Description
 
@@ -833,7 +834,6 @@ That path is used when checking out the source:
 <.> Move the old directory out of the way. If there are no local modifications in this directory, it can be deleted.
 
 <.> The path from <<updating-src-obtaining-src-repopath>> is added to the repository URL. The third parameter is the destination directory for the source code on the local system.
-====
 
 [[updating-src-building]]
 === Building from Source
@@ -1029,6 +1029,13 @@ With `-Ui`, man:mergemaster[8] automatically updates files that have not been us
 
 If a file must be manually merged, an interactive display allows the user to choose which portions of the files are kept.
 See man:mergemaster[8] for more information.
+
+If the standard [.filename]#/usr/src# was not used, another parameter must be passed to man:mergemaster[8]:
+
+[source,shell]
+....
+# mergemaster -Ui PATH_TO_SRC
+....
 
 [[updating-src-completing-check-old]]
 ==== Checking for Outdated Files and Libraries
